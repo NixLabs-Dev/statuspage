@@ -1,13 +1,13 @@
 "use client";
 import React, { useState } from "react";
-type MaintenanceBannerProps = {
+type OutageBannerBannerProps = {
   title: string;
   body: string;
   startTime: Date;
   endTime: Date;
 };
 
-const MaintenanceBanner: React.FC<MaintenanceBannerProps> = ({
+const OutageBanner: React.FC<OutageBannerBannerProps> = ({
   title,
   body,
   startTime,
@@ -73,4 +73,4 @@ const MaintenanceBanner: React.FC<MaintenanceBannerProps> = ({
   );
 };
 
-export default MaintenanceBanner;
+export default OutageBanner;

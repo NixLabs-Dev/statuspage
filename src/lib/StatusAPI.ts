@@ -32,7 +32,7 @@ export interface BannerItem {
   title: string;
   description: string;
   link: string;
-  startTime: string; // ISO 8601 date-time as a string
-  endTime: string; // ISO 8601 date-time as a string
+  startTime: Date; // ISO 8601 date-time as a string
+  endTime: Date; // ISO 8601 date-time as a string
   type: "MAINTENANCE" | "OUTAGE"; // Assuming type is an enum with specific values
 }
