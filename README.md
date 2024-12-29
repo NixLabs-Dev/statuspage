@@ -24,7 +24,16 @@ To get started with the NixLabs Networks Status Page, follow these steps:
 ### Installation
 
 1. Clone the repository:
-
    ```bash
    git clone https://github.com/NixLabsNetworks/status-page.git
    cd status-page
+   ```
+
+2. Build the container
+  ```bash
+  docker build -t nixlabs.dev/statuspage:latest --build-arg DATABASE_URL="<SOME DATABASE URL HERE>" .
+  ```
+3. Run the container on port 3000
+  ```bash
+  docker run -p 3000:3000 nixlabs.dev/statuspage:latest
+  ```
