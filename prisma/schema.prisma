@@ -1,0 +1,61 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  binaryTargets = ["native", "linux-musl-arm64-openssl-3.0.x"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model ServiceGroup {
+  id Int @id @default(autoincrement())
+  name String
+  services Service[]
+}
+
+model Service {
+  id Int @id @default(autoincrement())
+  name String @unique
+  description String
+  buttonURL String
+  address String
+  type String
+  options String
+  uptimeEntries UptimeEntry[]
+
+  //Service Group
+  serviceGroup ServiceGroup @relation(fields: [serviceGroupId], references: [id])
+  serviceGroupId Int
+}
+
+model UptimeEntry {
+id Int @id @default(autoincrement())
+  service Service @relation(fields: [serviceId], references: [id])
+  serviceId Int
+  state Boolean
+  responseTime Float
+
+}
+
+model BannerItem {
+  id Int @id @default(autoincrement())
+
+  //Details
+  title String
+  description String
+  link String
+
+  //Times
+  startTime DateTime
+  endTime DateTime
+
+  //Type of item (maintenance/outage)
+  type String
+}
