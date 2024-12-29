@@ -4,9 +4,17 @@ This is a simple status page built with **Next.js** for **NixLabs Networks**. It
 
 ## Features
 
+Current
 - Real-time status updates
 - Simple and clean design
 - Built with Next.js for performance and scalability
+
+Working on
+- Tie into NixLabs internal queueing API for sending messages via discord
+- Mathematical rendering making the first and last items in a list of an outage yellow and the rest red
+  (check if item to left is yellow, and item to right is yellow, then make red)
+  (if item to left is red, but to right is green then yellow)
+- Make email subscriptions work
 
 ## Screenshot
 
