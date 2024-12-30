@@ -11,7 +11,7 @@ export default function Header() {
           <span className="text-xl font-semibold">NixLabs Status</span>
         </Link>
       </div>
-      <div className="flex flex-wrap items-center gap-2">
+      <div className="flex flex-wrap items-center gap-2 hidden md:block">
         <SubscribeDialog />
       </div>
     </div>

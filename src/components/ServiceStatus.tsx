@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 type ServiceStatusProps = {
   service: string;
@@ -25,6 +25,32 @@ const ServiceStatus: React.FC<ServiceStatusProps> = ({
   status,
   history = [],
 }) => {
+  const [visibleHistory, setVisibleHistory] = useState(
+    history.slice(0, 20), // Default to small screen size on server render
+  );
+
+  useEffect(() => {
+    const updateVisibleHistory = () => {
+      const width = window.innerWidth;
+      if (width >= 1024) {
+        setVisibleHistory(history.slice(0, 120)); // Large screens (lg)
+      } else if (width >= 768) {
+        setVisibleHistory(history.slice(0, 90)); // Medium screens (md)
+      } else {
+        setVisibleHistory(history.slice(0, 30)); // Small screens (sm and below)
+      }
+    };
+
+    // Initial update
+    updateVisibleHistory();
+
+    // Add resize event listener
+    window.addEventListener("resize", updateVisibleHistory);
+
+    // Cleanup event listener on component unmount
+    return () => window.removeEventListener("resize", updateVisibleHistory);
+  }, [history]);
+
   return (
     <div className="flex flex-col space-y-2 p-4 border border-neutral-800 rounded-lg">
       {/* Service name and status */}
@@ -37,7 +63,7 @@ const ServiceStatus: React.FC<ServiceStatusProps> = ({
 
       {/* Status history bars */}
       <div className="flex space-x-1">
-        {history.map((item, index) => (
+        {visibleHistory.map((item, index) => (
           <div
             key={index}
             className={`w-2 h-6 rounded-sm transition-colors duration-200 ${statusBackgrounds[item]}`}

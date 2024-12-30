@@ -46,61 +46,59 @@ export default function Home({
   groups: ServiceGroup[];
 }) {
   return (
-    <div className="w-content rounded-xl flex flex-col items-center gap-4 py-8">
-      {banner.length > 0 ? (
-        banner[0].type == "MAINTENANCE" ? (
-          <MaintenanceBanner
-            key={banner[0].title}
-            title={banner[0].title}
-            body={banner[0].description}
-            startTime={banner[0].startTime}
-            endTime={banner[0].endTime}
-          />
-        ) : (
-          <OutageBanner
-            key={banner[0].title}
-            title={banner[0].title}
-            body={banner[0].description}
-            startTime={banner[0].startTime}
-            endTime={banner[0].endTime}
-          />
-        )
-      ) : (
-        <></>
+    <div className="w-full max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      {banner.length > 0 && (
+        <div className="w-full">
+          {banner[0].type == "MAINTENANCE" ? (
+            <MaintenanceBanner
+              key={banner[0].title}
+              title={banner[0].title}
+              body={banner[0].description}
+              startTime={banner[0].startTime}
+              endTime={banner[0].endTime}
+            />
+          ) : (
+            <OutageBanner
+              key={banner[0].title}
+              title={banner[0].title}
+              body={banner[0].description}
+              startTime={banner[0].startTime}
+              endTime={banner[0].endTime}
+            />
+          )}
+        </div>
       )}
-      <br />
-      <br />
       <Heading>Service Groups</Heading>
       {statusData.length > 0 ? (
-        statusData.map((item) => (
-          <>
-            <ServiceGroupContainer title={item.name}>
-              {item.services.map((item: Service) => (
+        <div className="grid grid-cols-1 gap-6">
+          {statusData.map((group) => (
+            <ServiceGroupContainer key={group.name} title={group.name}>
+              {group.services.map((service: Service) => (
                 <ServiceStatus
-                  key={item.name}
-                  service={item.name}
+                  key={service.name}
+                  service={service.name}
                   status={
-                    item.uptimeEntries.length == 0
+                    service.uptimeEntries.length === 0
                       ? "unknown"
-                      : item.uptimeEntries[item.uptimeEntries.length - 1]
-                            .state == true
+                      : service.uptimeEntries[service.uptimeEntries.length - 1]
+                            .state
                         ? "operational"
                         : "degraded"
                   }
                   history={pad_array(
-                    item.uptimeEntries.map((entry) =>
+                    service.uptimeEntries.map((entry) =>
                       entry.state ? "operational" : "degraded",
                     ),
-                    90,
+                    200,
                     "unknown",
                   )}
                 />
               ))}
             </ServiceGroupContainer>
-          </>
-        ))
+          ))}
+        </div>
       ) : (
-        <></>
+        <p className="text-center text-gray-500">No services available.</p>
       )}
     </div>
   );
