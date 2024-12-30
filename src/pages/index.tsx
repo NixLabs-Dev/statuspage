@@ -86,9 +86,9 @@ export default function Home({
                         : "degraded"
                   }
                   history={pad_array(
-                    service.uptimeEntries.map((entry) =>
-                      entry.state ? "operational" : "degraded",
-                    ),
+                    service.uptimeEntries.map((entry) => {
+                      return entry.state ? "operational" : "down";
+                    }),
                     200,
                     "unknown",
                   )}
