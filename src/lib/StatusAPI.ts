@@ -23,6 +23,8 @@ export interface Service {
 export interface ServiceGroup {
   id: number;
   name: string;
+  description: string;
+  location: string;
   services: Service[]; // services will be an array of Service objects
 }
 

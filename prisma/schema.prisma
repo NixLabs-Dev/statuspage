@@ -17,6 +17,8 @@ datasource db {
 model ServiceGroup {
   id Int @id @default(autoincrement())
   name String
+  description String @default("")
+  location String @default("")
   services Service[]
 }
 

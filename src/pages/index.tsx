@@ -3,7 +3,7 @@ import OutageBanner from "@/components/OutageBanner";
 import ServiceGroupContainer from "@/components/ServiceGroupContainer";
 import ServiceStatus from "@/components/ServiceStatus";
 import { GetServerSideProps } from "next";
-import Heading from "@/components/ui/heading";
+// import Heading from "@/components/ui/heading";
 import { pad_array } from "@/lib/utils";
 import { ServiceGroup, Service, BannerItem } from "@/lib/StatusAPI";
 import { PrismaClient } from "@prisma/client";
@@ -30,7 +30,6 @@ export const getServerSideProps = (async () => {
       },
     },
   })) as ServiceGroup[];
-
   // Pass data to the page via props
   return { props: { banner, groups } };
 }) satisfies GetServerSideProps<{
@@ -68,11 +67,15 @@ export default function Home({
           )}
         </div>
       )}
-      <Heading>Service Groups</Heading>
+      {/* <Heading className="mb-4">Service Groups</Heading> */}
       {statusData.length > 0 ? (
         <div className="grid grid-cols-1 gap-6">
           {statusData.map((group) => (
-            <ServiceGroupContainer key={group.name} title={group.name}>
+            <ServiceGroupContainer
+              key={group.name}
+              title={group.name}
+              description={group.description}
+            >
               {group.services.map((service: Service) => (
                 <ServiceStatus
                   key={service.name}

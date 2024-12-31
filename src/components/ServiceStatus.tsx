@@ -36,8 +36,10 @@ const ServiceStatus: React.FC<ServiceStatusProps> = ({
         setVisibleHistory(history.slice(0, 120)); // Large screens (lg)
       } else if (width >= 768) {
         setVisibleHistory(history.slice(0, 90)); // Medium screens (md)
+      } else if (width >= 500) {
+        setVisibleHistory(history.slice(0, 60)); // Small screens (sm and below)
       } else {
-        setVisibleHistory(history.slice(0, 30)); // Small screens (sm and below)
+        setVisibleHistory(history.slice(0, 30)); // Smallest screens
       }
     };
 
@@ -51,8 +53,10 @@ const ServiceStatus: React.FC<ServiceStatusProps> = ({
     return () => window.removeEventListener("resize", updateVisibleHistory);
   }, [history]);
 
+  const minutes = visibleHistory.length; // Calculate the time span
+
   return (
-    <div className="flex flex-col space-y-2 p-4 border border-neutral-800 rounded-lg">
+    <div className="flex flex-col space-y-4 p-4 border border-neutral-800 rounded-lg">
       {/* Service name and status */}
       <div className="flex items-center justify-between">
         <span className="text-lg font-medium">{service}</span>
@@ -69,6 +73,15 @@ const ServiceStatus: React.FC<ServiceStatusProps> = ({
             className={`w-2 h-6 rounded-sm transition-colors duration-200 ${statusBackgrounds[item]}`}
           />
         ))}
+      </div>
+
+      {/* Breakline with text */}
+      <div className="relative flex items-center my-2">
+        <div className="flex-grow border-t border-neutral-700"></div>
+        <span className="px-3 text-sm text-neutral-500">
+          {minutes} minutes of status
+        </span>
+        <div className="flex-grow border-t border-neutral-700"></div>
       </div>
     </div>
   );
