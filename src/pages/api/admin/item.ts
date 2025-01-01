@@ -1,5 +1,5 @@
 import handleAuth from "@/lib/handleAuth";
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient, ServiceType } from "@prisma/client";
 import { NextApiRequest, NextApiResponse } from "next";
 import { z, ZodError } from "zod";
 
@@ -10,7 +10,7 @@ const schema = z.object({
   description: z.string().nonempty("Description is required"),
   buttonURL: z.string().url("Invalid URL format"),
   address: z.string().nonempty("Address is required"),
-  type: z.enum(["HTTP", "ICMP"]),
+  type: z.nativeEnum(ServiceType),
   options: z.any(), // Use `.any()` for flexible structure; customize based on expected shape if needed
   serviceGroup: z
     .string()
@@ -69,7 +69,7 @@ export async function handler(req: NextApiRequest, res: NextApiResponse) {
           description: data.description,
           buttonURL: data.buttonURL,
           address: data.address,
-          type: data.type.toString(),
+          type: data.type,
           options: JSON.stringify(data.options || {}),
           serviceGroupId: data.serviceGroup,
         },
