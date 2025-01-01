@@ -64,5 +64,5 @@ model BannerItem {
 
 model Subscribed {
   id Int @id @default(autoincrement())
-  email String
+  email String @unique
 }
