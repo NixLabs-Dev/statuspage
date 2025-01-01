@@ -1,7 +1,16 @@
+import { Service } from "@/lib/StatusAPI";
 import { PrismaClient } from "@prisma/client";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 const client = new PrismaClient();
+
+function filterServiceFields(services: Service[]) {
+  return services.map((service) => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { address, type, options, ...filteredService } = service; // Exclude unwanted fields
+    return filteredService; // Return the filtered service object
+  });
+}
 
 export default async function handler(
   req: NextApiRequest,
@@ -14,7 +23,9 @@ export default async function handler(
         include: {
           services: {
             include: {
-              uptimeEntries: true,
+              uptimeEntries: {
+                take: 120, // Limit to 120 uptimeEntries per service
+              },
             },
           },
         },
@@ -27,12 +38,18 @@ export default async function handler(
         "Access-Control-Allow-Headers",
         "Content-Type, Authorization",
       );
+      const filteredServiceGroups = serviceGroups.map((group) => {
+        return {
+          ...group, // Retain the serviceGroup properties
+          services: filterServiceFields(group.services), // Apply filtering to the services array within the group
+        };
+      });
 
-      // Return the active banner items as JSON
-      return res.status(200).json(serviceGroups);
+      // Return the active items items as JSON
+      return res.status(200).json(filteredServiceGroups);
     } catch (error) {
       console.error(error);
-      return res.status(500).json({ error: "Failed to fetch banner items." });
+      return res.status(500).json({ error: "Failed to fetch group items." });
     }
   } else {
     // Handle unsupported HTTP methods
