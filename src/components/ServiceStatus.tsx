@@ -33,13 +33,13 @@ const ServiceStatus: React.FC<ServiceStatusProps> = ({
     const updateVisibleHistory = () => {
       const width = window.innerWidth;
       if (width >= 1024) {
-        setVisibleHistory(history.slice(0, 120)); // Large screens (lg)
+        setVisibleHistory(history.slice(history.length - 120, 120)); // Large screens (lg)
       } else if (width >= 768) {
-        setVisibleHistory(history.slice(0, 90)); // Medium screens (md)
+        setVisibleHistory(history.slice(history.length - 90, 120)); // Medium screens (md)
       } else if (width >= 500) {
-        setVisibleHistory(history.slice(0, 60)); // Small screens (sm and below)
+        setVisibleHistory(history.slice(history.length - 60, 120)); // Small screens (sm and below)
       } else {
-        setVisibleHistory(history.slice(0, 30)); // Smallest screens
+        setVisibleHistory(history.slice(history.length - 30, 120)); // Smallest screens
       }
     };
 

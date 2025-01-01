@@ -92,7 +92,7 @@ export default function Home({
                     service.uptimeEntries.map((entry) => {
                       return entry.state ? "operational" : "down";
                     }),
-                    200,
+                    120,
                     "unknown",
                   )}
                 />
