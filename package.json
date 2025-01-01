@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev --turbopack",
     "generate": "npx prisma generate",
+    "dbpush": "npx prisma db push",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
