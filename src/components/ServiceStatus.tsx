@@ -4,6 +4,7 @@ type ServiceStatusProps = {
   service: string;
   status: "operational" | "degraded" | "down" | "unknown";
   history?: ("operational" | "degraded" | "down" | "unknown")[]; // Past statuses
+  description: string;
 };
 
 const statusColors: Record<string, string> = {
@@ -24,6 +25,7 @@ const ServiceStatus: React.FC<ServiceStatusProps> = ({
   service,
   status,
   history = [],
+  description,
 }) => {
   const [visibleHistory, setVisibleHistory] = useState(
     history.slice(0, 20), // Default to small screen size on server render
@@ -59,7 +61,12 @@ const ServiceStatus: React.FC<ServiceStatusProps> = ({
     <div className="flex flex-col space-y-4 p-4 border border-neutral-800 rounded-lg">
       {/* Service name and status */}
       <div className="flex items-center justify-between">
-        <span className="text-lg font-medium">{service}</span>
+        <span className="flex flex-row gap-10">
+          <span className="text-lg font-bold">{service}</span>
+          <span className="text-neutral-200 hidden md:block">
+            {description}
+          </span>
+        </span>
         <span className={`text-sm font-semibold ${statusColors[status]}`}>
           {status}
         </span>

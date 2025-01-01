@@ -78,6 +78,7 @@ export default function Home({
             >
               {group.services.map((service: Service) => (
                 <ServiceStatus
+                  description={service.description}
                   key={service.name}
                   service={service.name}
                   status={
