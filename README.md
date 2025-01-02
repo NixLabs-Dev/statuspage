@@ -57,7 +57,7 @@ To get started with the NixLabs Networks Status Page, follow these steps:
   npm install
   ```
 
-2. Copy `.env.example` into `.env`, and modify.
+2. Copy [`.env.example`](./.env.example) into `.env`, and modify.
 
 3. Generate database types:
   ```bash
