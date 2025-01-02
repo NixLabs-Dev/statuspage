@@ -5,6 +5,9 @@ export default async function handleAuth(
   name: string,
   permissions: string,
 ) {
+  // Skip auth check if developing
+  if (process.env.NODE_ENV === "development") return true;
+
   try {
     const res = await fetch(IDENTITY_URL + "/testApp", {
       method: "POST",

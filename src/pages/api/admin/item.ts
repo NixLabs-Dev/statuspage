@@ -23,17 +23,24 @@ const schema = z.object({
 
 // The handler function for GET requests to /api/banner
 export async function handler(req: NextApiRequest, res: NextApiResponse) {
-  if (!req.headers.authorization)
-    return res.status(400).json({
-      error: "Please pass an authorization header!",
-    });
-  const name = req.headers.authorization?.split(":")[0] || "";
-  const secret = req.headers.authorization?.split(":")[1] || "";
+  // Only check auth if not developing
+  if (process.env.NODE_ENV !== "development") {
+    if (!req.headers.authorization)
+      return res.status(400).json({
+        error: "Please pass an authorization header!",
+      });
+    const name = req.headers.authorization?.split(":")[0] || "";
+    const secret = req.headers.authorization?.split(":")[1] || "";
 
-  const isAuthorized = await handleAuth(secret, name, "Statuspage.CreateItem");
+    const isAuthorized = await handleAuth(
+      secret,
+      name,
+      "Statuspage.CreateItem",
+    );
 
-  if (!isAuthorized)
-    res.status(401).json({ message: "You are not authorized!" });
+    if (!isAuthorized)
+      res.status(401).json({ message: "You are not authorized!" });
+  }
 
   if (req.method == "GET") {
     try {
