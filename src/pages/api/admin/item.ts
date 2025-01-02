@@ -12,13 +12,7 @@ const schema = z.object({
   address: z.string().nonempty("Address is required"),
   type: z.nativeEnum(ServiceType),
   options: z.any(), // Use `.any()` for flexible structure; customize based on expected shape if needed
-  serviceGroup: z
-    .string()
-    .regex(/^\d+$/, "Service group must be a valid number")
-    .transform((val) => parseInt(val, 10)) // Transform string to integer
-    .refine((val) => val >= 0, {
-      message: "Service group must be a non-negative number",
-    }),
+  serviceGroup: z.number().int(),
 });
 
 // The handler function for GET requests to /api/banner
