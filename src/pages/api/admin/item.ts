@@ -39,14 +39,14 @@ export async function handler(req: NextApiRequest, res: NextApiResponse) {
     );
 
     if (!isAuthorized)
-      res.status(401).json({ message: "You are not authorized!" });
+      return res.status(401).json({ message: "You are not authorized!" });
   }
 
   if (req.method == "GET") {
     try {
       const services = await client.service.findMany();
 
-      res.status(200).json(
+      return res.status(200).json(
         services.map((service) => {
           // eslint-disable-next-line @typescript-eslint/no-unused-vars
           const { address, type, options, ...filteredService } = service; // Exclude unwanted fields
@@ -57,16 +57,17 @@ export async function handler(req: NextApiRequest, res: NextApiResponse) {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       if (error instanceof ZodError) {
-        res.status(400).json({
+        return res.status(400).json({
           error: error.errors
             .map((e) => `${e.path.join(".")} is ${e.message}`)
             .join("\n"),
         });
       } else {
-        res.status(500).json(error.message);
+        return res.status(500).json(error.message);
       }
     }
   }
+
   if (req.method === "POST") {
     try {
       const data = schema.parse(req.body);
@@ -83,25 +84,25 @@ export async function handler(req: NextApiRequest, res: NextApiResponse) {
         },
       });
 
-      res.status(200).json({
+      return res.status(200).json({
         message: "Successfully created status item" + item.name,
       });
 
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       if (error instanceof ZodError) {
-        res.status(400).json({
+        return res.status(400).json({
           error: error.errors
             .map((e) => `${e.path.join(".")} is ${e.message}`)
             .join("\n"),
         });
       } else {
-        res.status(500).json(error.message);
+        return res.status(500).json(error.message);
       }
     }
   } else {
     // If method is not GET, return a 405 Method Not Allowed
-    res.status(405).json({ error: "Method Not Allowed" });
+    return res.status(405).json({ error: "Method Not Allowed" });
   }
 }
 

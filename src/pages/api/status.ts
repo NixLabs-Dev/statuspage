@@ -55,17 +55,17 @@ export default async function handler(
       );
 
       // Return combined response
-      res.status(200).json({
+      return res.status(200).json({
         services: filteredServiceGroups,
         banner: activeBannerItems,
       });
     } catch (error) {
       console.error(error);
-      res.status(500).json({ error: "Internal Server Error" });
+      return res.status(500).json({ error: "Internal Server Error" });
     }
   } else {
     // Handle unsupported HTTP methods
     res.setHeader("Allow", ["GET"]);
-    res.status(405).json({ error: "Method Not Allowed" });
+    return res.status(405).json({ error: "Method Not Allowed" });
   }
 }
