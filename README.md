@@ -44,6 +44,8 @@ To get started with the NixLabs Networks Status Page, follow these steps:
   ```bash
   docker build -t nixlabs.dev/statuspage:latest --build-arg DATABASE_URL="<SOME DATABASE URL HERE>" .
   ```
+> [!NOTE]
+> During local testing, you might find using `postgresql://<USERNAME>@host.docker.internal/nixlabs-status?schema=public` for `DATABASE_URL` to be useful.
 
 3. Run the container on port 3000:
   ```bash
