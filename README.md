@@ -20,7 +20,7 @@ Working on
 
 <details>
     <summary>Status Page</summary>
-    ![Status Page Screenshot](./screenshot.png)
+    <img src="./screenshot.png" alt="Status Page Screenshot" />
 </details>
 
 ## Setup
