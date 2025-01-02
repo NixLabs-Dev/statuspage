@@ -46,6 +46,7 @@ export async function handler(req: NextApiRequest, res: NextApiResponse) {
           return filteredService; // Return the filtered service object
         }),
       );
+
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       if (error instanceof ZodError) {
@@ -78,6 +79,7 @@ export async function handler(req: NextApiRequest, res: NextApiResponse) {
       res.status(200).json({
         message: "Successfully created status item" + item.name,
       });
+
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       if (error instanceof ZodError) {
