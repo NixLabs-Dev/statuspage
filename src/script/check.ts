@@ -103,10 +103,6 @@ async function checkAndNotify(serviceId: number) {
   }
 }
 
-/**
- * Placeholder for the sendEmail function.
- * Replace this with your actual email sending implementation.
- */
 async function sendEmail(serviceId: number) {
   console.log(`Sending email notification for service ID: ${serviceId}`);
 
@@ -140,7 +136,6 @@ async function sendEmail(serviceId: number) {
         console.error(error);
       });
   });
-  // Add your email sending logic here
 }
 
 checkStatus();

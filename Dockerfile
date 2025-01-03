@@ -32,7 +32,7 @@ RUN apk add --no-cache bash curl dcron
 # Add cron job to run every minute
 
 RUN touch crontab.tmp \
-    && echo '* * * * * npx tsx /app/src/script/check.ts >> /var/log/cron.log 2>&1' > crontab.tmp \
+    && echo '* * * * * npx tsx /app/src/script/check.ts' > crontab.tmp \
     && crontab crontab.tmp \
     && rm -rf crontab.tmp
 
