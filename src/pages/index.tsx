@@ -81,14 +81,21 @@ export default function Home({
                   description={service.description}
                   key={service.name}
                   service={service.name}
-                  status={
-                    service.uptimeEntries.length === 0
-                      ? "unknown"
-                      : service.uptimeEntries[service.uptimeEntries.length - 1]
-                            .state
-                        ? "operational"
-                        : "degraded"
-                  }
+                  status={(() => {
+                    const recentEntries = service.uptimeEntries
+                      .slice(-30) // Consider the last 10 entries for the status check
+                      .map((entry) => (entry.state ? "operational" : "down"));
+
+                    if (recentEntries.every((state) => state === "down")) {
+                      return "Down";
+                    } else if (
+                      recentEntries[recentEntries.length - 1] === "down"
+                    ) {
+                      return "Degraded";
+                    } else {
+                      return "Operational";
+                    }
+                  })()}
                   history={pad_array(
                     service.uptimeEntries.map((entry) => {
                       return entry.state ? "operational" : "down";

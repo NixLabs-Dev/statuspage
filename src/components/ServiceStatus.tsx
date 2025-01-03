@@ -2,16 +2,16 @@ import React, { useState, useEffect } from "react";
 
 type ServiceStatusProps = {
   service: string;
-  status: "operational" | "degraded" | "down" | "unknown";
+  status: "Operational" | "Degraded" | "Down" | "Unknown";
   history?: ("operational" | "degraded" | "down" | "unknown")[]; // Past statuses
   description: string;
 };
 
 const statusColors: Record<string, string> = {
-  operational: "text-green-500",
-  degraded: "text-yellow-500",
-  down: "text-red-500",
-  unknown: "text-neutral-500 hover:text-neutral-300",
+  Operational: "text-green-500",
+  Degraded: "text-yellow-500",
+  Down: "text-red-500",
+  Unknown: "text-neutral-500 hover:text-neutral-300",
 };
 
 const statusBackgrounds: Record<string, string> = {
