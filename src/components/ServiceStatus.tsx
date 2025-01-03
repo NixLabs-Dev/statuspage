@@ -61,7 +61,7 @@ const ServiceStatus: React.FC<ServiceStatusProps> = ({
     <div className="flex flex-col space-y-4 p-4 border border-neutral-800 rounded-lg">
       {/* Service name and status */}
       <div className="flex items-center justify-between">
-        <span className="flex flex-row gap-10">
+        <span className="flex flex-row items-center gap-10">
           <span className="text-lg font-bold">{service}</span>
           <span className="text-neutral-200 hidden md:block">
             {description}

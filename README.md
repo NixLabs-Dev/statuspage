@@ -16,9 +16,12 @@ Working on
   (if item to left is red, but to right is green then yellow)
 - Make email subscriptions work
 
-## Screenshot
+## Screenshots
 
-![Status Page Screenshot](./screenshot.png)
+<details>
+    <summary>Status Page</summary>
+    <img src="./screenshot.png" alt="Status Page Screenshot" />
+</details>
 
 ## Setup
 
@@ -32,16 +35,43 @@ To get started with the NixLabs Networks Status Page, follow these steps:
 ### Installation
 
 1. Clone the repository:
-   ```bash
-   git clone https://github.com/NixLabsNetworks/status-page.git
-   cd status-page
-   ```
+  ```bash
+  git clone https://github.com/NixLabsNetworks/status-page.git
+  cd status-page
+  ```
 
-2. Build the container
+2. Build the container:
   ```bash
   docker build -t nixlabs.dev/statuspage:latest --build-arg DATABASE_URL="<SOME DATABASE URL HERE>" .
   ```
-3. Run the container on port 3000
+> [!NOTE]
+> During local testing, you might find using `postgresql://<USERNAME>@host.docker.internal/<DATABASE>?schema=public` for `DATABASE_URL` to be useful.
+
+3. Run the container on port 3000:
   ```bash
   docker run -p 3000:3000 nixlabs.dev/statuspage:latest
+  ```
+
+### Development
+
+1. Install dependencies:
+  ```bash
+  npm install
+  ```
+
+2. Copy [`.env.example`](./.env.example) into `.env`, and modify.
+
+3. Generate database types:
+  ```bash
+  npm run generate
+  ```
+
+4. Push schema to database:
+  ```bash
+  npm run dbpush
+  ```
+
+5. Run the development environment:
+  ```bash
+  npm run dev
   ```

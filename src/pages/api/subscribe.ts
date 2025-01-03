@@ -26,14 +26,14 @@ export default async function handler(
 
       const subscriber = await client.subscribed.create({ data: { email } });
 
-      res.status(201).json(subscriber);
+      return res.status(201).json(subscriber);
     } catch (error) {
       console.error(error);
-      res.status(500).json({ error: "Internal Server Error" });
+      return res.status(500).json({ error: "Internal Server Error" });
     }
   } else {
     res.setHeader("Allow", ["POST"]);
-    res.status(405).json({ error: "Method Not Allowed" });
+    return res.status(405).json({ error: "Method Not Allowed" });
   }
 }
 
