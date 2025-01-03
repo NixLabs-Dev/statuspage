@@ -8,10 +8,10 @@ Current
 - Real-time status updates
 - Simple and clean design
 - Built with Next.js for performance and scalability
-- Make email subscriptions work
 
 Working on
 - Tie into NixLabs internal queueing API for sending messages via discord
+- Make email subscriptions work
 
 ## Screenshots
 
