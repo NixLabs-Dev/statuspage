@@ -4,7 +4,6 @@ import ServiceGroupContainer from "@/components/ServiceGroupContainer";
 import ServiceStatus from "@/components/ServiceStatus";
 import { GetServerSideProps } from "next";
 // import Heading from "@/components/ui/heading";
-import { pad_array } from "@/lib/utils";
 import { ServiceGroup, Service, BannerItem } from "@/lib/StatusAPI";
 import { PrismaClient } from "@prisma/client";
 
