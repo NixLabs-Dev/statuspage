@@ -6,6 +6,7 @@
     "dev": "next dev --turbopack",
     "generate": "npx prisma generate",
     "dbpush": "npx prisma db push",
+    "backend": "tsx src/backend/index.ts",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
