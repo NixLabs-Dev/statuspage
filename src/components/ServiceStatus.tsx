@@ -1,11 +1,14 @@
+import { pad_array } from "@/lib/utils";
+import { UptimeEntry } from "@prisma/client";
 import React, { useState, useEffect } from "react";
 
 type ServiceStatusProps = {
   service: string;
-  status: "Operational" | "Degraded" | "Down" | "Unknown";
-  history?: ("operational" | "degraded" | "down" | "unknown")[]; // Past statuses
   description: string;
+  uptime?: UptimeEntry[]; // Past statuses
 };
+
+type uptimeTypes = "operational" | "down" | "degraded";
 
 const statusColors: Record<string, string> = {
   Operational: "text-green-500",
@@ -23,10 +26,17 @@ const statusBackgrounds: Record<string, string> = {
 
 const ServiceStatus: React.FC<ServiceStatusProps> = ({
   service,
-  status,
-  history = [],
+  uptime = [],
   description,
 }) => {
+  const history = pad_array(
+    uptime.map((entry) => {
+      return entry.state ? "operational" : "down";
+    }),
+    120,
+    "unknown",
+  );
+
   const [visibleHistory, setVisibleHistory] = useState(
     history.slice(0, 20), // Default to small screen size on server render
   );
@@ -57,6 +67,22 @@ const ServiceStatus: React.FC<ServiceStatusProps> = ({
 
   const minutes = visibleHistory.length; // Calculate the time span
 
+  const getStatus = (
+    prev: uptimeTypes,
+    current: uptimeTypes,
+    next: uptimeTypes,
+  ) => {
+    if (prev === undefined && current === "down") return "down";
+    if (prev === "operational" && current === "down" && next === "down")
+      return "degraded";
+    if (prev === "operational" && current === "down" && next === "operational")
+      return "degraded";
+    if (prev === "down" && current === "down") return "down";
+    if (prev === "down" && current === "operational") return "degraded";
+    if (prev === "degraded" && current === "operational") return "operational";
+    return current; // Default to the current status if no rule matches
+  };
+
   return (
     <div className="flex flex-col space-y-4 p-4 border border-neutral-800 rounded-lg">
       {/* Service name and status */}
@@ -67,19 +93,39 @@ const ServiceStatus: React.FC<ServiceStatusProps> = ({
             {description}
           </span>
         </span>
-        <span className={`text-sm font-semibold ${statusColors[status]}`}>
-          {status}
+        <span
+          className={`text-sm font-semibold ${
+            statusColors[
+              history
+                .slice(-5)
+                .some((state) => state === "down" || state === "degraded")
+                ? "Degraded"
+                : "Operational"
+            ]
+          }`}
+        >
+          {history
+            .slice(-5)
+            .some((state) => state === "down" || state === "degraded")
+            ? "Degraded"
+            : "Operational"}
         </span>
       </div>
 
       {/* Status history bars */}
       <div className="flex space-x-1">
-        {visibleHistory.map((item, index) => (
-          <div
-            key={index}
-            className={`w-2 h-6 rounded-sm transition-colors duration-200 ${statusBackgrounds[item]}`}
-          />
-        ))}
+        {history.map((current, index) => {
+          const prev = history[index - 1];
+          const next = history[index + 1];
+          const status = getStatus(prev, current, next);
+
+          return (
+            <div
+              key={index}
+              className={`w-2 h-6 rounded-sm transition-colors duration-200 ${statusBackgrounds[status]}`}
+            />
+          );
+        })}
       </div>
 
       {/* Breakline with text */}
