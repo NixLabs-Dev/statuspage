@@ -28,7 +28,7 @@ model Service {
   description   String
   buttonURL     String
   address       String
-  type          ServiceType
+  type          ServiceType @default(ICMP)
   options       String
   uptimeEntries UptimeEntry[]
 
