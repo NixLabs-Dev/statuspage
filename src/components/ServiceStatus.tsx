@@ -97,18 +97,28 @@ const ServiceStatus: React.FC<ServiceStatusProps> = ({
           className={`text-sm font-semibold ${
             statusColors[
               history
-                .slice(-5)
-                .some((state) => state === "down" || state === "degraded")
-                ? "Degraded"
-                : "Operational"
+                .slice(-10)
+                .every((state) => state === "down" || state === "degraded")
+                ? "Down"
+                : history
+                      .slice(-5)
+                      .every(
+                        (state) => state === "down" || state === "degraded",
+                      )
+                  ? "Degraded"
+                  : "Operational"
             ]
           }`}
         >
           {history
-            .slice(-5)
-            .some((state) => state === "down" || state === "degraded")
-            ? "Degraded"
-            : "Operational"}
+            .slice(-10)
+            .every((state) => state === "down" || state === "degraded")
+            ? "Down"
+            : history
+                  .slice(-5)
+                  .every((state) => state === "down" || state === "degraded")
+              ? "Degraded"
+              : "Operational"}
         </span>
       </div>
 

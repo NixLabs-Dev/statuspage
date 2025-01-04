@@ -7,5 +7,5 @@ export function cn(...inputs: ClassValue[]) {
 // eslint-disable-next-line  @typescript-eslint/no-explicit-any
 export function pad_array(arr: any[], len: number, fill: any) {
   const padding = Array(len).fill(fill); // Create an array of padding elements
-  return padding.concat(arr.reverse()).slice(-len); // Reverse arr, add padding before it, and slice from the end
+  return padding.concat(arr).slice(-len); // Reverse arr, add padding before it, and slice from the end
 }
