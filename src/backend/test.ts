@@ -1,7 +1,7 @@
-import * as mailer from "./handlers/mailer";
+import * as cleaner from "./handlers/cleaner";
 
 async function main() {
-  await mailer.handle();
+  await cleaner.cleanupUptimeEntries();
 }
 
 main();
