@@ -9,10 +9,10 @@ Current
 - Simple and clean design
 - Built with Next.js for performance and scalability
 - Make email subscriptions work
+- Make a cleanup script to cleanup the database once every five minutes.
 
 Working on
 - Tie into NixLabs internal queueing API for sending messages via discord
-- Make a cleanup script to cleanup the database once every five minutes.
 
 ## Screenshots
 

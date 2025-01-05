@@ -20,7 +20,7 @@ cron.schedule("* * * * *", async () => {
   }
 });
 
-cron.schedule("* * * * *", async () => {
+cron.schedule("*/20 * * * *", async () => {
   try {
     logInfo("Processing database cleanup");
     cleaner.cleanupUptimeEntries();
